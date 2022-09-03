@@ -124,7 +124,6 @@ module.exports.updatePost = asyncHandler(async (postId, userId, newObj) => {
       // });
       // Delete old image in AWS S3
       const imageKey = oldPost.image.replace(process.env.AWS_IMAGE_PATH, '');
-      // const imageKey = oldPost.image.replace('https://tj-images.s3.us-west-2.amazonaws.com/', '');
       const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: imageKey
@@ -173,7 +172,6 @@ module.exports.deletePost = asyncHandler(async (postId, userId) => {
     // });
     // Delete image from AWS S3 bucket
     const imageKey = post.image.replace(process.env.AWS_IMAGE_PATH, '');
-    // const imageKey = post.image.replace('https://tj-images.s3.us-west-2.amazonaws.com/', '');
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: imageKey
