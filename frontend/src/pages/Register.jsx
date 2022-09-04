@@ -55,7 +55,11 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault()
-
+    // Check if all mandatory fields are valid or not
+    if (!email || !firstName || !lastName || !password) {
+      toast.error('All these fields are mandatory!')
+      return
+    }
     if (password !== password2) {
       toast.error('Passwords do not match')
     } else {
@@ -95,6 +99,7 @@ function Register() {
               value={firstName}
               placeholder='First name'
               onChange={onChange}
+              required
             />
             <input
               type='text'
@@ -104,6 +109,7 @@ function Register() {
               value={lastName}
               placeholder='Last name'
               onChange={onChange}
+              required
             />
           </div>
           <div className='form-group'>
@@ -115,6 +121,7 @@ function Register() {
               value={email}
               placeholder='Enter your email'
               onChange={onChange}
+              required
             />
           </div>
           <div className='form-group'>
