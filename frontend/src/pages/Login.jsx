@@ -24,7 +24,11 @@ function Login() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message)
+      if (message === 400) {
+        toast.error(`No user found with email ${email}`);
+      } else {
+        toast.error('Password is incorrect!');
+      }
     }
 
     if (isSuccess || user) {
