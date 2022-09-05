@@ -24,13 +24,13 @@ function Register() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const { user, isLoading, isError, isSuccess } = useSelector(
+  const { user, isLoading, isError, message, isSuccess } = useSelector(
     (state) => state.auth
   )
 
   useEffect(() => {
     if (isError) {
-      toast.error('This email is already in use, please try another one.')
+      toast.error(message.error);
     }
 
     if (isSuccess || user) {
@@ -38,7 +38,7 @@ function Register() {
     }
 
     dispatch(reset())
-  }, [user, isError, isSuccess, navigate, dispatch])
+  }, [user, isError, isSuccess, message, navigate, dispatch])
 
   useEffect(() => {
     if (!image || image.length < 1) return;

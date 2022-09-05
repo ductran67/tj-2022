@@ -13,11 +13,7 @@ router.post("/login", asyncHandler(async (req, res, next) => {
   let result = await userData.findByCredentials(req.body)
 
   if(result.error){
-    if (result.error === 'Password is incorrect!') {
-      res.status(401).send(result);
-    } else {
-      res.status(400).send(result);
-    }
+    res.status(400).send(result);
   } else {
     res.status(200).json(result);
   }
@@ -28,7 +24,7 @@ router.post("/login", asyncHandler(async (req, res, next) => {
 router.post('/register', upload.single('image'), asyncHandler(async (req, res, next) => {
   const userInfo = {...req.body, ...req.file}
   let result = await userData.create(userInfo)
-  if(result.error){
+  if (result.error) {
     res.status(400).send(result);
   } else {
     res.status(200).json(result);
@@ -45,12 +41,8 @@ router.put("/:id", protect, upload.single('image'), asyncHandler( async (req, re
   if (!result) {
     res.status(500).send({error: "Something went wrong. Please try again."});
   } else {
-    if(result.error){
-      if (result.error === 'Email already exists.') {
-        res.status(400).send(result);
-      } else {
-        res.status(401).send(result);
-      };
+    if (result.error) {
+      res.status(400).send(result.error)
     } else {
       res.status(200).json(result);
     }
