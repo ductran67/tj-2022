@@ -23,7 +23,7 @@ Each post of any traveler will be review, comment and rating by users who are in
 More valuable posts with positive comments and rating from every user in the world are more valuable data for this website.
 ## Description of the Databases, Collections, Schema, Source of data
   Database name: travel-journal (in MongoDB Atlas);
-  Collections: users, posts, comments
+  Collections: users, posts, comments, myfavoriteposts
   Collection Schemas:
   1/ users {
       userid (_id): string,
@@ -42,17 +42,15 @@ More valuable posts with positive comments and rating from every user in the wor
       country: string,
       image: string,
       content (unforgettable memories): string,
-      roundtripPrice {
-        airBnBPrice: number,
-        hotelPrice: number,
-        couplePrice: number,
-        familyPrice: number
-      }
-      userid: string,
+      airBnBPrice: number,
+      hotelPrice: number,
+      couplePrice: number,
+      familyPrice: number
+      userId: string,
       createdAt: timeStamp,
       updatedAt: timeStamp
     };
-  3/ myFavoritePosts {
+  3/ myfavoriteposts {
       postId (_id): string,
       userId: string,
       createdAt: timeStamp
@@ -60,49 +58,50 @@ More valuable posts with positive comments and rating from every user in the wor
 
   4/ comments {
       commentid (_id): string,
-      name: string,
-      email: string,
-      postid: string,
-      text: string,
+      user (userId): string,
+      post (postId): string,
+      comment: string,
       rating (from 1 to 5 stars): number,
       date: timeStamp
     };
 
 
 ## List of endpoints
-  registerUser;
+  create; // Create a new user
   updateUser;
-  loginUser;
-  getUserById;
+  findByCredentials; // login by user email & password
+  getMe; // Get user by userid
   getAllPosts;
-  getPostsByUserId;
+  getPostsByUser;
   getPostByPostId;
   createPost;
   updatePost;
   deletePost;
   createComment;
-  getCommentsByPostId;
-  getAvgRateForPost;
+  getCommentsByPost;
+  createComment;
+  deleteComment;
+  getAllMyFavoritePosts;
+  createMyFavoritePost;
+  deleteMyFavoritePost;
 
 
 ## External tools (not libraries like React, but separate systems or third party tools, like a second database)
-For Front-End: redux-toolkit, jwt-decode, bootstrap, react-google-login, react-paginate, react-icons, axios,...
+For Front-End: redux-toolkit, bootstrap, react-bootstrap, react-redux, react-toastify, react-paginate, react-icons, axios, data-fns, react-scripts,...
 
-For Back-End: mongoose, express, express-async-handler, bcryptjs, dotenv, jsonwebtoken, nodemon, concurrently, multer, body-parse, cors,...
+For Back-End: mongoose, express, express-async-handler, bcryptjs, dotenv, jsonwebtoken, nodemon, concurrently, multer, multer-s3, @aws-sdk/client-s3, aws-sdk,...
 
 ## Describe the functionality that the front end app will have
 Home page: display all posts with comments and rating for each post and searching feature
 Login page;
 Register page;
-Update user page;
-My Posts: display all posts of loggedin user;
-My Favorite Posts: display all the user's favorite posts
-
+Profile page;
+UserHome page: My Posts - display all posts of loggedin user;
+FavoritePosts page: display all the user's favorite posts;
+PostDetail page: display a single post with comment list for the post.
 
 # Plan a work timeline (Owner: Project Manager)
 ## High level work timeline. List the work items that you plan to complete, organized by each of the 5 remaining weeks until the presentation
-
-![img.png](assets/img.png)
 
 
 
