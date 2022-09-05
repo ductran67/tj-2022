@@ -6,7 +6,6 @@ import { FaUser } from 'react-icons/fa'
 import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 import { Container } from 'react-bootstrap'
-// import Image from 'react-bootstrap/Image'
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -31,6 +30,7 @@ function Register() {
 
   useEffect(() => {
     if (isError) {
+      // toast.error('This email is already in use, please try another one.')
       toast.error(message)
     }
 
@@ -57,7 +57,7 @@ function Register() {
     e.preventDefault()
     // Check if all mandatory fields are valid or not
     if (!email || !firstName || !lastName || !password) {
-      toast.error('All these fields are mandatory!')
+      toast.error('Email, password, first name and last name are mandatory!')
       return
     }
     if (password !== password2) {

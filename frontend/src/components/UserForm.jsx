@@ -93,13 +93,16 @@ function UserForm() {
         navigate(`/profile/${user._id}`);
       })
       .catch(err => {
+        // if(err.response) {
+        //   if (err.response.status===400) {
+        //     toast.error('Email already exists.');
+        //   };
+        //   if (err.response.status===401) {
+        //     toast.error('Old password is incorrect!');
+        //   }
+        // }
         if(err.response) {
-          if (err.response.status===400) {
-            toast.error('Email already exists.');
-          };
-          if (err.response.status===401) {
-            toast.error('Old password is incorrect!');
-          }
+          toast.error(err.response.data);
         }
       })
   }

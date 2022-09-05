@@ -16,7 +16,7 @@ const Post = ({ post, showUsername, fromFavoritePostPage }) => {
                       :
                       <img src={default_image} alt = '' className='author-small-image' />
                     :
-                    post.author?
+                    post.author && post.author.image?
                     <img src={post.author.image} alt = '' className='author-small-image' />
                       :
                       <img src={default_image} alt = '' className='author-small-image' />;

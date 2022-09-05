@@ -44,6 +44,9 @@ function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault()
+    if (!email || !password) {
+      toast.error('Please enter your email and password!')
+    }
 
     const userData = {
       email,
