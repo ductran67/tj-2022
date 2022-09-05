@@ -42,7 +42,12 @@ router.put("/:id", protect, upload.single('image'), asyncHandler( async (req, re
     res.status(500).send({error: "Something went wrong. Please try again."});
   } else {
     if(result.error){
-      res.status(400).send(result);
+      if (result.error === 'Email already exists.') {
+        res.status(400).send(result);
+      } else {
+        res.status(401).send(result);
+      };
+      console.log(res.status);
     } else {
       res.status(200).json(result);
     }
