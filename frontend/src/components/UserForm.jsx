@@ -65,6 +65,7 @@ function UserForm() {
     if (oldPassword || password || password2) {
       if (password !== password2) {
         toast.error('Passwords do not match')
+        return
       }
     } 
     const userData = {
@@ -94,7 +95,7 @@ function UserForm() {
       })
       .catch(err => {
         if (err.response) {
-          toast.error(err.response.data.error);
+          toast.error(err.response.data);
         }
       })
   }
