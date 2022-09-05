@@ -94,7 +94,6 @@ function UserForm() {
       })
       .catch(err => {
         if(err.response) {
-          console.log(err.response.status);
           if (err.response.status===400) {
             toast.error('Email already exists.');
           };

@@ -19,13 +19,13 @@ export const register = createAsyncThunk(
     try {
       return await authService.register(user)
     } catch (error) {
-      // const message =
-      //   (error.response &&
-      //     error.response.data &&
-      //     error.response.data.message) ||
-      //   error.message ||
-      //   error.toString()
-      return thunkAPI.rejectWithValue(error.response.data)
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
     }
   }
 )
@@ -35,11 +35,11 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
     return await authService.login(user)
   } catch (error) {
-    // const message =
-    //   (error.response && error.response.data && error.response.data.message) ||
-    //   error.message ||
-    //   error.toString()
-    return thunkAPI.rejectWithValue(error.response.data)
+    const message = error.response.data;
+      // (error.response && error.response.data && error.response.data.message) ||
+      // error.message ||
+      // error.toString()
+    return thunkAPI.rejectWithValue(message)
   }
 })
 
@@ -55,13 +55,13 @@ export const updateUser = createAsyncThunk(
       const token = thunkAPI.getState().auth.user.token
       return await authService.updateUser(userData, token)
     } catch (error) {
-      // const message =
-      //   (error.response &&
-      //     error.response.data &&
-      //     error.response.data.message) ||
-      //   error.message ||
-      //   error.toString()
-      return thunkAPI.rejectWithValue(error.response.data)
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
     }
 })
 

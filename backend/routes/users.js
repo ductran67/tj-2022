@@ -13,7 +13,11 @@ router.post("/login", asyncHandler(async (req, res, next) => {
   let result = await userData.findByCredentials(req.body)
 
   if(result.error){
-    res.status(400).send(result);
+    if (result.error === 'Password is incorrect!') {
+      res.status(401).send(result);
+    } else {
+      res.status(400).send(result);
+    }
   } else {
     res.status(200).json(result);
   }
@@ -47,7 +51,6 @@ router.put("/:id", protect, upload.single('image'), asyncHandler( async (req, re
       } else {
         res.status(401).send(result);
       };
-      console.log(res.status);
     } else {
       res.status(200).json(result);
     }
