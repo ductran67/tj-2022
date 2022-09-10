@@ -47,6 +47,7 @@ const Home = () => {
   if (isLoading) {
     return <Spinner />
   }
+  
   // Set the number of items for each page
   const postsPerPage = 2;
   const pagesVisited = pageNumber * postsPerPage;

@@ -35,6 +35,26 @@ module.exports.getAllMyFavoritePosts = asyncHandler(async (userId) => {
       '$sort': {
         'updatedAt': -1
       }
+    }, {
+      '$lookup': {
+        'from': 'comments', 
+        'localField': 'post._id', 
+        'foreignField': 'post', 
+        'as': 'comment',
+        'pipeline': [
+          {
+            '$group': {
+              '_id': '$post', 
+              'count': {
+                '$count': {}
+              }, 
+              'avgRating': {
+                '$avg': '$rating'
+              }
+            }
+          }
+        ]
+      }
     }
   ];
   let myFavoritePosts = await MyFavoritePost.aggregate(pipeline);

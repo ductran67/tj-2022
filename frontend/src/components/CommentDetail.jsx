@@ -1,5 +1,6 @@
 import default_image from '../logo/default_user.jpg';
 import formatDistance from 'date-fns/formatDistance';
+import StarShowing from './StarShowing';
 
 const CommentDetail = ({ comment }) => {
   const image = comment.author.image? comment.author.image : default_image;
@@ -20,7 +21,8 @@ const CommentDetail = ({ comment }) => {
       <div className="sub-text">
         {comment.rating > 0 ? (
           <div className='px-2'>
-            Rating: {comment.rating} {comment.rating === 1 ? `star`: `stars`} -
+            {/* Showing rating by stars */}
+            <StarShowing ratingNo={comment.rating} />
           </div>
           ): ''
         }

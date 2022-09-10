@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import formatDistance from 'date-fns/formatDistance';
 import default_image from '../logo/default_user.jpg';
+import { FaStar, FaComments } from 'react-icons/fa';
 const Post = ({ post, showUsername, fromFavoritePostPage }) => {
   if (!post) {return}
   // Get author image & name
@@ -30,8 +31,11 @@ const Post = ({ post, showUsername, fromFavoritePostPage }) => {
   const title = fromFavoritePostPage ? post.post.title : post.title;
   const image = fromFavoritePostPage ? post.post.image : post.image;
   
-  const postDate = post.updatedAt ? ` Last modified: ${formatDistance(new Date(post.updatedAt), new Date())}` : '';
-  
+  const postDate = post.updatedAt ? ` ${formatDistance(new Date(post.updatedAt), new Date())}` : '';
+  const starIcon = < FaStar className='orange-color' />;
+  // Get total of comments and average rating for the post
+  const commentCounts = post.comment && post.comment[0] ? `${post.comment[0].count} ` : '';
+  const avgRating = post.comment && post.comment[0] && post.comment[0].avgRating > 0 ? ` ~ ${parseFloat(post.comment[0].avgRating).toFixed(1)} ` : '';
   return (
     <Card className='mb-2'>
       <Link to={`/postDetail/${postId}`}>
@@ -42,11 +46,17 @@ const Post = ({ post, showUsername, fromFavoritePostPage }) => {
         <Link to={`/postDetail/${postId}`}>
           <Card.Title>{title}</Card.Title>
         </Link>
-        <Card.Text>
-          {authorImage}
-          {author}
-          {postDate}
-        </Card.Text>
+        <div className='post-subtitle'>
+          <div>
+            {authorImage}
+            {author}
+            {postDate}
+          </div>
+          <div>
+            {commentCounts} {commentCounts? < FaComments /> : null}
+            {avgRating} {avgRating? starIcon : null}
+          </div>
+        </div>
       </Card.Body>
     </Card>
   )

@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pablomarcel/travel-journal.git"
+    "url": "git+https://github.com/ductran67/tj-2022.git"
   },
   "author": "C-team 2022",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pablomarcel/travel-journal/issues"
+    "url": "https://github.com/ductran67/tj-2022/issues"
   },
-  "homepage": "https://github.com/pablomarcel/travel-journal#readme",
+  "homepage": "https://github.com/ductran67/tj-2022#readme",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.160.0",
     "aws-sdk": "^2.1205.0",

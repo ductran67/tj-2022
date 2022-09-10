@@ -15,6 +15,23 @@ const s3 = new S3({
 
 // Get all posts from posts collection
 module.exports.getAllPosts = asyncHandler(async () => {
+  // const pipeline = [
+  //   {
+  //     '$lookup': {
+  //       'from': 'users', 
+  //       'localField': 'user', 
+  //       'foreignField': '_id', 
+  //       'as': 'author'
+  //     }
+  //   }, {
+  //     "$unwind": "$author"
+  //   }, {
+  //     '$sort': {
+  //       'updatedAt': -1
+  //     }
+  //   }
+  // ];
+
   const pipeline = [
     {
       '$lookup': {
@@ -24,13 +41,35 @@ module.exports.getAllPosts = asyncHandler(async () => {
         'as': 'author'
       }
     }, {
-      "$unwind": "$author"
+      '$unwind': {
+        'path': '$author'
+      }
     }, {
       '$sort': {
         'updatedAt': -1
       }
+    }, {
+      '$lookup': {
+        'from': 'comments', 
+        'localField': '_id', 
+        'foreignField': 'post', 
+        'as': 'comment',
+        'pipeline': [
+          {
+            '$group': {
+              '_id': '$post', 
+              'count': {
+                '$count': {}
+              }, 
+              'avgRating': {
+                '$avg': '$rating'
+              }
+            }
+          }
+        ]
+      }
     }
-  ];
+  ]
 
   let posts = await Post.aggregate(pipeline);
   return posts;
@@ -52,6 +91,26 @@ module.exports.getPostByPostId = asyncHandler(async (postId) => {
       }
     }, {
       "$unwind": "$author"
+    }, {
+      '$lookup': {
+        'from': 'comments', 
+        'localField': '_id', 
+        'foreignField': 'post', 
+        'as': 'comment',
+        'pipeline': [
+          {
+            '$group': {
+              '_id': '$post', 
+              'count': {
+                '$count': {}
+              }, 
+              'avgRating': {
+                '$avg': '$rating'
+              }
+            }
+          }
+        ]
+      }
     }
   ];
 
@@ -62,7 +121,48 @@ module.exports.getPostByPostId = asyncHandler(async (postId) => {
 
 // Get all posts of a user (by userId)
 module.exports.getPostsByUser = asyncHandler(async (userId) => {
-  let posts = await Post.find({ user: userId }).sort({updatedAt: -1});
+  // let posts = await Post.find({ user: userId }).sort({updatedAt: -1});
+  const pipeline = [
+    {
+      '$match': {
+        'user': ObjectId(userId)
+      }
+    }, {
+      '$lookup': {
+        'from': 'users', 
+        'localField': 'user', 
+        'foreignField': '_id', 
+        'as': 'author'
+      }
+    }, {
+      "$unwind": "$author"
+    }, {
+      '$sort': {
+        'updatedAt': -1
+      }
+    }, {
+      '$lookup': {
+        'from': 'comments', 
+        'localField': '_id', 
+        'foreignField': 'post', 
+        'as': 'comment',
+        'pipeline': [
+          {
+            '$group': {
+              '_id': '$post', 
+              'count': {
+                '$count': {}
+              }, 
+              'avgRating': {
+                '$avg': '$rating'
+              }
+            }
+          }
+        ]
+      }
+    }
+  ];
+  let posts = await Post.aggregate(pipeline);
   return posts;
 })
 
