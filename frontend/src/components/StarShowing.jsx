@@ -6,7 +6,7 @@ const StarShowing = ({ ratingNo }) => {
     <div className="star-showing">
       {
         [...Array(ratingNo)].map((star, idx) => {
-          return <FaStar key = {idx} className="orange-color" />;
+          return <FaStar key = {idx} className="star-color" />;
         })
       }
     </div>

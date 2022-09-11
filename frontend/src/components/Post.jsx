@@ -12,27 +12,21 @@ const Post = ({ post, showUsername, fromFavoritePostPage }) => {
 
   if (showUsername) {
     authorImage = fromFavoritePostPage ?
-                    post.post.author && post.post.author.image ?
-                      <img src={post.post.author.image} alt = '' className='author-small-image' />
-                      :
-                      <img src={default_image} alt = '' className='author-small-image' />
+                    <img src={ post.post.author && post.post.author.image ? post.post.author.image : default_image } alt = '' className='author-small-image' />
                     :
-                    post.author && post.author.image?
-                    <img src={post.author.image} alt = '' className='author-small-image' />
-                      :
-                      <img src={default_image} alt = '' className='author-small-image' />;
+                    <img src={ post.author && post.author.image ? post.author.image : default_image } alt = '' className='author-small-image' />;
     author = fromFavoritePostPage ?
-              post.post? ` ${post.post.author.firstName} ${post.post.author.lastName} - `:''
-              : 
-              post.author? ` ${post.author.firstName} ${post.author.lastName} - `:'';
+              post.post.author ? ` ${post.post.author.firstName} ${post.post.author.lastName} - ` : ''
+              :
+              post.author? ` ${post.author.firstName} ${post.author.lastName} - ` : '';
   }
-  
+
   const postId = fromFavoritePostPage ? post.post._id : post._id;
   const title = fromFavoritePostPage ? post.post.title : post.title;
   const image = fromFavoritePostPage ? post.post.image : post.image;
   
   const postDate = post.updatedAt ? ` ${formatDistance(new Date(post.updatedAt), new Date())}` : '';
-  const starIcon = < FaStar className='orange-color' />;
+  const starIcon = < FaStar className='star-color' />;
   // Get total of comments and average rating for the post
   const commentCounts = post.comment && post.comment[0] ? `${post.comment[0].count} ` : '';
   const avgRating = post.comment && post.comment[0] && post.comment[0].avgRating > 0 ? ` ~ ${parseFloat(post.comment[0].avgRating).toFixed(1)} ` : '';

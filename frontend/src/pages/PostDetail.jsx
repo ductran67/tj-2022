@@ -74,18 +74,16 @@ const PostDetail = () => {
   };
 
   // Get author image
-  const authorImage = post.author && post.author.image ? 
-                        <img src={ post.author.image } alt = '' className='author-small-image' />
-                        :
-                        <img src={ default_image } alt = '' className='author-small-image' />;
+  const authorImage = <img src={ post.author && post.author.image ? post.author.image : default_image } alt = '' className='author-small-image' />;
   // Get author name
-  const author = post.author ? ` ${post.author.firstName} ${post.author.lastName} - `:'';
+  const author = post.author ? ` ${post.author.firstName} ${post.author.lastName} - ` : '';
   // Get last modified date
   const postDate = post.updatedAt? formatDistance(new Date(post.updatedAt), new Date()) : '';
-  const starIcon = < FaStar className='orange-color' />;
+  const starIcon = < FaStar className='star-color' />;
   // Get total of comments and average rating for the post
   const commentCounts = post.comment && post.comment[0] ? `${post.comment[0].count} ` : '';
   const avgRating = post.comment && post.comment[0] && post.comment[0].avgRating > 0 ? ` ~ ${parseFloat(post.comment[0].avgRating).toFixed(1)} ` : '';
+  
   return (
     <Container fluid>
       <div className='title bottom__line'>{post.title}</div>
@@ -105,11 +103,6 @@ const PostDetail = () => {
                 {avgRating} {avgRating? starIcon : null}
               </div>
             </div>
-              {/* <Card.Text> */}
-                {/* <img src={authorImage} alt = '' className='author-small-image' /> */}
-                {/* {post.author ? ` ${post.author.firstName} ${post.author.lastName}`:''} */}
-                {/* {post.updatedAt? ` - Last modified: ${formatDistance(new Date(post.updatedAt), new Date())}`:''} */}
-              {/* </Card.Text> */}
             </Card.Body>
           </Card>
         </Col>
@@ -131,7 +124,6 @@ const PostDetail = () => {
               <Button variant="outline-primary" type="submit" onClick={()=> toggleCommentForm()}>
                 Add New Comment
               </Button>
-
             </div>)
             : ''
           }
