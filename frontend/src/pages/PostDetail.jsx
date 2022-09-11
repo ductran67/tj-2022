@@ -133,11 +133,15 @@ const PostDetail = () => {
             </Card.Body>
           </div>
 
-          <Card className='mb-2'>
-            <Card.Body>
-              {comments && comments.length > 0 ? <CommentList comments = {comments} refreshCommentData = {refreshCommentData} /> : null}
-            </Card.Body>
-          </Card>
+          {comments && comments.length > 0 ?
+            <Card className='mb-2'>
+              <Card.Body>
+                <CommentList comments = {comments} refreshCommentData = {refreshCommentData} />
+              </Card.Body>
+            </Card>
+            :
+            null
+          }
         </Col>
       </Row>
 
